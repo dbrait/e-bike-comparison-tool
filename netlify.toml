@@ -1,6 +1,6 @@
 [build]
   base = "e-bike-comparison-frontend"
-  command = "npm run build"
+  command = "npm ci && npm run build"
   publish = "build"
 
 [[redirects]]
@@ -10,6 +10,7 @@
 
 [build.environment]
   CI = "false"
+  NODE_VERSION = "14" # or whichever version you're using locally
 
 # If you need to specify a custom API URL
 # [context.production.environment]
