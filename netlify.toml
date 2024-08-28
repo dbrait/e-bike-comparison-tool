@@ -1,6 +1,6 @@
 [build]
   base = "e-bike-comparison-frontend"
-  command = "npm ci && npm run build"
+  command = "npm run build"
   publish = "build"
 
 [[redirects]]
