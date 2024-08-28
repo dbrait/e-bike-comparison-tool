@@ -35,21 +35,19 @@ export const EBikeProvider = ({ children }) => {
     try {
       const params = new URLSearchParams({
         search: searchTerm,
-        // ... other filter params
         page: currentPage,
         limit: 10,
       });
 
-      // Update this line to use the Netlify function URL
       const response = await axios.get('/.netlify/functions/get-bikes', { params });
-      setEBikes(response.data.bikes || response.data); // Adjust based on the response structure
-      setTotalPages(response.data.totalPages || 1); // Adjust if needed
+      setEBikes(response.data.bikes || response.data);
+      setTotalPages(response.data.totalPages || 1);
     } catch (error) {
       console.error('Error fetching e-bikes:', error);
       setError('Failed to fetch e-bikes. Please try again later.');
     }
     setLoading(false);
-  }, [searchTerm, currentPage]); // Remove 'filters' if it's not used in the function
+  }, [searchTerm, currentPage]); // Remove 'filters' from here if it's not used in the function
 
   const fetchFilters = useCallback(async () => {
     try {
