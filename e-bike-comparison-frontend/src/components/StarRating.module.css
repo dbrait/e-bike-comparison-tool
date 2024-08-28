@@ -1,0 +1,32 @@
+.starRating {
+    font-size: 1.5em;
+    color: #f8ce0b;
+    margin-bottom: 10px;
+  }
+  
+  .fullStar {
+    color: #f8ce0b;
+  }
+  
+  .halfStar {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .halfStar::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: #f8ce0b;
+  }
+  
+  .halfStar::after {
+    content: '☆';
+    color: #ccc;
+  }
+  
+  .emptyStar {
+    color: #ccc;
+  }
