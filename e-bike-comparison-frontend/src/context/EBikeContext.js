@@ -49,7 +49,7 @@ export const EBikeProvider = ({ children }) => {
       setError('Failed to fetch e-bikes. Please try again later.');
     }
     setLoading(false);
-  }, [searchTerm, filters, currentPage]);
+  }, [searchTerm, currentPage]); // Remove 'filters' if it's not used in the function
 
   const fetchFilters = useCallback(async () => {
     try {
