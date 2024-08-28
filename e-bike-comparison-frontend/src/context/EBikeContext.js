@@ -39,6 +39,11 @@ export const EBikeProvider = ({ children }) => {
         limit: 10,
       });
 
+      // If you need to use filters, you can access them directly from the filters state
+      // without including them in the dependency array
+      // Example: const filterParams = JSON.stringify(filters);
+      // params.append('filters', filterParams);
+
       const response = await axios.get('/.netlify/functions/get-bikes', { params });
       setEBikes(response.data.bikes || response.data);
       setTotalPages(response.data.totalPages || 1);
@@ -47,7 +52,7 @@ export const EBikeProvider = ({ children }) => {
       setError('Failed to fetch e-bikes. Please try again later.');
     }
     setLoading(false);
-  }, [searchTerm, currentPage]); // Remove 'filters' from here if it's not used in the function
+  }, [searchTerm, currentPage]); // Remove 'filters' from here
 
   const fetchFilters = useCallback(async () => {
     try {
