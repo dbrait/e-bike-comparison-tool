@@ -11,6 +11,7 @@
 [build.environment]
   NODE_VERSION = "14"
   DISABLE_ESLINT_PLUGIN = "true"
+  CI = "false"
 
 # If you need to specify a custom API URL
 # [context.production.environment]
