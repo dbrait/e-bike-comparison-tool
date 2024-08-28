@@ -8,11 +8,8 @@
   to = "/index.html"
   status = 200
 
-[functions]
-  directory = "functions"
-
 [build.environment]
-  NODE_VERSION = "14" # or whichever version you're using
+  CI = "false"
 
 # If you need to specify a custom API URL
 # [context.production.environment]
