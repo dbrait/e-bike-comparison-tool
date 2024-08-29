@@ -1,11 +1,18 @@
 import React from 'react';
+import { useEBikeContext } from '../context/EBikeContext';
 import styles from './EBikeGrid.module.css';
-import StarRating from './StarRating';
 
-function EBikeGrid({ eBikes, onRemoveBike }) {
+function EBikeGrid() {
+  const { eBikes, removeEBike } = useEBikeContext();
+
   if (!eBikes || eBikes.length === 0) {
     return <div>No e-bikes found.</div>;
   }
+
+  const renderStars = (rating) => {
+    const starCount = Math.round(parseFloat(rating));
+    return '★'.repeat(starCount) + '☆'.repeat(5 - starCount);
+  };
 
   return (
     <div className={styles.grid}>
@@ -13,35 +20,31 @@ function EBikeGrid({ eBikes, onRemoveBike }) {
         <div key={bike.id} className={styles.card}>
           <button 
             className={styles.removeButton} 
-            onClick={() => onRemoveBike(bike.id)}
+            onClick={() => removeEBike(bike.id)}
             aria-label="Remove e-bike"
           >
             🗑️
           </button>
-          {bike.imageUrl && (
-            <img 
-              src={bike.imageUrl} 
-              alt={bike.name} 
-              className={styles.bikeImage}
-            />
-          )}
           <h3 className={styles.cardTitle}>{bike.name}</h3>
-          <p className={styles.cardInfo}>Brand: {bike.brand}</p>
-          <p className={styles.cardInfo}>Price: ${bike.price}</p>
-          <p className={styles.cardInfo}>Range: {bike.range} miles</p>
-          <p className={styles.cardInfo}>Weight: {bike.weight} lbs</p>
-          <p className={styles.cardInfo}>Motor: {bike.motor}</p>
-          <p className={styles.cardInfo}>Battery: {bike.battery}</p>
-          <p className={styles.cardInfo}>Bike Type: {bike.bikeType || 'N/A'}</p>
-          <p className={styles.cardInfo}>Model Year: {bike.modelYear}</p>
-          <p className={styles.cardInfo}>Top Speed: {bike.topSpeed} mph</p>
-          <p className={styles.cardInfo}>Warranty: {bike.warranty}</p>
-          <StarRating rating={bike.rating} />
+          <div className={styles.ratingContainer}>
+            <span className={styles.stars}>{renderStars(bike.rating)}</span>
+          </div>
+          <img src={bike.imageUrl} alt={bike.name} className={styles.bikeImage} />
+          <p className={styles.cardInfo}><strong>Brand:</strong> {bike.brand}</p>
+          <p className={styles.cardInfo}><strong>Price:</strong> ${bike.price}</p>
+          <p className={styles.cardInfo}><strong>Type:</strong> {bike.bikeType}</p>
+          <p className={styles.cardInfo}><strong>Model Year:</strong> {bike.modelYear}</p>
+          <p className={styles.cardInfo}><strong>Range:</strong> {bike.range}</p>
+          <p className={styles.cardInfo}><strong>Weight:</strong> {bike.weight}</p>
+          <p className={styles.cardInfo}><strong>Motor:</strong> {bike.motor}</p>
+          <p className={styles.cardInfo}><strong>Top Speed:</strong> {bike.topSpeed}</p>
+          <p className={styles.cardInfo}><strong>Warranty:</strong> {bike.warranty}</p>
+          <p className={styles.cardInfo}><strong>Battery:</strong> {bike.battery}</p>
           <a 
             href={bike.productUrl} 
             target="_blank" 
-            rel="noopener noreferrer" 
-            className={styles.siteButton}
+            rel="noopener noreferrer"
+            className={styles.goToSiteButton}
           >
             Go to Site
           </a>

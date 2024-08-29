@@ -1,0 +1,33 @@
+.appContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.searchBarContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px; /* Increased margin to add padding between search bar and menu buttons */
+}
+
+.filterOptionsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}

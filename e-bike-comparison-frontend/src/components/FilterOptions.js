@@ -1,27 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useEBikeContext } from '../context/EBikeContext';
 import styles from './FilterOptions.module.css';
 
-function FilterOptions({ filters, onFilterChange, brands, bikeTypes, modelYears, warranties, topSpeedRange }) {
+function FilterOptions() {
+  const { 
+    filters, 
+    handleFilterChange, 
+    brands, 
+    bikeTypes, 
+    modelYears, 
+    warranties,
+    ratings,
+    motors,
+    weights,
+    ranges
+  } = useEBikeContext();
   const [openDropdown, setOpenDropdown] = useState(null);
+  const dropdownRefs = useRef({});
 
-  const handleCheckboxChange = (event, filterName) => {
-    const { value, checked } = event.target;
-    let newValues;
-    if (checked) {
-      newValues = [...filters[filterName], value];
-    } else {
-      newValues = filters[filterName].filter(item => item !== value);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (openDropdown && !dropdownRefs.current[openDropdown].contains(event.target)) {
+        setOpenDropdown(null);
+      }
     }
-    onFilterChange({ ...filters, [filterName]: newValues });
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openDropdown]);
+
+  const renderStars = (rating) => {
+    return '★'.repeat(rating) + '☆'.repeat(5 - rating);
   };
 
-  const renderDropdownCheckboxGroup = (name, options, label) => (
-    <div className={styles.filterSelect}>
+  const renderDropdown = (name, options, label) => (
+    <div key={name} className={styles.filterSelect} ref={el => dropdownRefs.current[name] = el}>
       <button 
         onClick={() => setOpenDropdown(openDropdown === name ? null : name)}
         className={styles.dropdownButton}
       >
-        {label} ({filters[name].length})
+        {label}
       </button>
       {openDropdown === name && (
         <div className={styles.dropdownContent}>
@@ -31,9 +51,18 @@ function FilterOptions({ filters, onFilterChange, brands, bikeTypes, modelYears,
                 type="checkbox"
                 value={option}
                 checked={filters[name].includes(option)}
-                onChange={(e) => handleCheckboxChange(e, name)}
+                onChange={(e) => {
+                  const newValue = e.target.checked
+                    ? [...filters[name], option]
+                    : filters[name].filter(item => item !== option);
+                  handleFilterChange(name, newValue);
+                }}
               />
-              {option}
+              {name === 'rating' ? (
+                <span className={styles.ratingStars}>{renderStars(parseInt(option))}</span>
+              ) : (
+                option
+              )}
             </label>
           ))}
         </div>
@@ -43,38 +72,14 @@ function FilterOptions({ filters, onFilterChange, brands, bikeTypes, modelYears,
 
   return (
     <div className={styles.filterContainer}>
-      {renderDropdownCheckboxGroup('brand', brands, 'Brand')}
-      {renderDropdownCheckboxGroup('bikeType', bikeTypes, 'Bike Type')}
-      {renderDropdownCheckboxGroup('modelYear', modelYears, 'Model Year')}
-      {renderDropdownCheckboxGroup('warranty', warranties, 'Warranty')}
-
-      <div className={styles.filterSelect}>
-        <label>Price Range</label>
-        <input
-          type="number"
-          value={filters.priceRange[0]}
-          onChange={(e) => onFilterChange({ ...filters, priceRange: [Number(e.target.value), filters.priceRange[1]] })}
-          placeholder="Min Price"
-        />
-        <input
-          type="number"
-          value={filters.priceRange[1]}
-          onChange={(e) => onFilterChange({ ...filters, priceRange: [filters.priceRange[0], Number(e.target.value)] })}
-          placeholder="Max Price"
-        />
-      </div>
-
-      <div className={styles.filterSelect}>
-        <label>Top Speed Range</label>
-        <input
-          type="range"
-          min={topSpeedRange.min}
-          max={topSpeedRange.max}
-          value={filters.topSpeed}
-          onChange={(e) => onFilterChange({ ...filters, topSpeed: Number(e.target.value) })}
-        />
-        <span>{filters.topSpeed} mph</span>
-      </div>
+      {renderDropdown('brand', brands, 'Brand')}
+      {renderDropdown('bikeType', bikeTypes, 'Bike Type')}
+      {renderDropdown('modelYear', modelYears, 'Model Year')}
+      {renderDropdown('warranty', warranties, 'Warranty')}
+      {renderDropdown('rating', ratings, 'Rating')}
+      {renderDropdown('motor', motors, 'Motor')}
+      {renderDropdown('weight', weights, 'Weight')}
+      {renderDropdown('range', ranges, 'Range')}
     </div>
   );
 }

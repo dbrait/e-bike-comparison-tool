@@ -1,17 +1,44 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  padding: 20px 1%; /* Further reduced side padding */
+  max-width: 2000px; /* Further increased max-width */
+  margin: 0 auto;
+}
+
+@media (max-width: 1600px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
   position: relative;
+  border: 2px solid #d0d0d0;
+  border-radius: 12px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
 .removeButton {
@@ -31,23 +58,50 @@
 }
 
 .cardTitle {
-  font-size: 1.2em;
-  margin-bottom: 10px;
+  font-size: 1.6em;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
 }
 
 .cardInfo {
-  margin: 2px 0;
-  font-size: 0.9em;
+  margin: 2px 0; /* Decreased from 4px to 2px */
+  font-size: 1.1em; /* Increased from 1em */
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cardInfo:last-child {
+  border-bottom: none;
+}
+
+.cardInfo strong {
+  font-weight: 600;
+  color: #333;
+  margin-right: 5px;
+  flex: 1;
+}
+
+.cardInfo span {
+  flex: 2;
+  text-align: right;
 }
 
 .selectButton {
-  margin-top: 10px;
-  padding: 5px 10px;
+  margin-top: 15px;
+  padding: 8px 12px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
 .selectButton:hover {
@@ -56,12 +110,12 @@
 
 .siteButton {
   display: inline-block;
-  margin-top: 10px;
-  padding: 8px 16px;
+  margin-top: 15px;
+  padding: 10px 18px;
   background-color: #007bff;
   color: white;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-weight: bold;
   text-align: center;
   transition: background-color 0.3s ease;
@@ -75,6 +129,73 @@
   width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 8px 8px 0 0;
-  margin-bottom: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  font-weight: 600;
+  color: #333;
+}
+
+.card p {
+  margin: 8px 0;
+  font-size: 1em;
+  color: #555;
+}
+
+.goToSiteButton {
+  display: inline-block;
+  background-color: #3498db;
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.goToSiteButton:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.ratingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  justify-content: center;
+}
+
+.stars {
+  color: #ffd700;
+  font-size: 2.4em; /* Doubled from 1.8em */
+  letter-spacing: 3px; /* Increased spacing between stars */
+}
+
+/* Remove the .ratingNumber class as we're no longer using it */
+
+.dropdownButton {
+  padding: 10px 15px;
+  background-color: #1a5f7a; /* Changed to a darker blue */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  width: 120px;
+  height: 40px;
+}
+
+.dropdownButton:hover {
+  background-color: #14455a; /* Darker shade for hover state */
 }
